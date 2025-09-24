@@ -35,35 +35,38 @@ print('}')
 ########## 2 Задача #########
 
 def get_shop_list_by_dishes(person_count, dishes):
-    result = {}
-    for dish in dishes:
-        if dish in cook_book:
-            for consist in cook_book[dish]:
-                product_name = consist['product']
-                quantity_needed = consist['quantity'] * person_count
+    shopping_list = {}
 
-                if product_name in result:
-                    result[product_name]['quantity'] += quantity_needed
-                else:
-                    result[product_name] = {
-                        'measure': consist['measure'],
-                        'quantity': quantity_needed
-                    }
-        else:
-            print(f'Блюда "{dish}" нет в кулинарной книге')
+    for dish_name in dishes:
+        if dish_name not in cook_book:
+            print(f'Блюда "{dish_name}" нет в кулинарной книге')
+            continue
 
+        for ingredient in cook_book[dish_name]:
+            product_name = ingredient['product']
+            quantity_needed = ingredient['quantity'] * person_count
+
+            if product_name in shopping_list:
+                shopping_list[product_name]['quantity'] += quantity_needed
+            else:
+                shopping_list[product_name] = {
+                    'measure': ingredient['measure'],
+                    'quantity': quantity_needed
+                }
+
+    # Красивый вывод без итерирования по индексам
     print('{')
-    for i, (product, info) in enumerate(result.items()):
-        if i == len(result) - 1:  # Последний элемент без запятой
-            print(f"  '{product}': {{'measure': '{info['measure']}', 'quantity': {info['quantity']}}}")
-        else:
-            print(f"  '{product}': {{'measure': '{info['measure']}', 'quantity': {info['quantity']}}},")
+    products = list(shopping_list.items())
+    for product, details in products:
+        is_last_product = (product == products[-1][0])
+        comma = "" if is_last_product else ","
+        print(f"  '{product}': {{'measure': '{details['measure']}', 'quantity': {details['quantity']}}} {comma}")
     print('}')
-    return result
+
+    return shopping_list
 
 
 print('\nДВА БЛЮДА НА ДВЕ ПЕРСОНЫ, ЗАДАНИЕ 2')
-
 get_shop_list_by_dishes(2, ['Салат Греческий', 'Курица с картофелем'])
 
 
