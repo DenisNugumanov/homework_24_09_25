@@ -64,3 +64,27 @@ def get_shop_list_by_dishes(person_count, dishes):
 print('\nДВА БЛЮДА НА ДВЕ ПЕРСОНЫ, ЗАДАНИЕ 2')
 
 get_shop_list_by_dishes(2, ['Салат Греческий', 'Курица с картофелем'])
+
+
+########## 3 Задача #########
+
+name_dict = {}
+
+with open('1.txt', encoding='utf-8') as f1:
+    name_1 = '1.txt'
+    count_1 = len(f1.readlines())
+    with open('2.txt', encoding='utf-8') as f2:
+        name_2 = '2.txt'
+        count_2 = len(f2.readlines())
+        with open('3.txt', encoding='utf-8') as f3:
+            name_3 = '3.txt'
+            count_3 = len(f3.readlines())
+            name_dict = {count_1: [name_1, count_1], count_2: [name_2, count_2], count_3: [name_3, count_3]}
+
+sorted_dict = dict(sorted(name_dict.items()))
+with open('result.txt', 'a', encoding='utf-8') as file:
+    for value in sorted_dict.values():
+        for i in value:
+            file.write(f'{i}\n')
+with open('result.txt', encoding='utf-8') as result_file:
+    print(result_file.read())
