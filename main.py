@@ -54,7 +54,7 @@ def get_shop_list_by_dishes(person_count, dishes):
                     'quantity': quantity_needed
                 }
 
-    # Красивый вывод без итерирования по индексам
+
     print('{')
     products = list(shopping_list.items())
     for product, details in products:
