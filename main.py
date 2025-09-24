@@ -29,3 +29,38 @@ for recipe_name, ingredients in cook_book.items():
     else:
         print("  ],")
 print('}')
+
+
+########## 2 Задача #########
+
+def get_shop_list_by_dishes(person_count, dishes):
+    result = {}
+    for dish in dishes:
+        if dish in cook_book:
+            for consist in cook_book[dish]:
+                product_name = consist['product']
+                quantity_needed = consist['quantity'] * person_count
+
+                if product_name in result:
+                    result[product_name]['quantity'] += quantity_needed
+                else:
+                    result[product_name] = {
+                        'measure': consist['measure'],
+                        'quantity': quantity_needed
+                    }
+        else:
+            print(f'Блюда "{dish}" нет в кулинарной книге')
+
+    print('{')
+    for i, (product, info) in enumerate(result.items()):
+        if i == len(result) - 1:  # Последний элемент без запятой
+            print(f"  '{product}': {{'measure': '{info['measure']}', 'quantity': {info['quantity']}}}")
+        else:
+            print(f"  '{product}': {{'measure': '{info['measure']}', 'quantity': {info['quantity']}}},")
+    print('}')
+    return result
+
+
+print('\nДВА БЛЮДА НА ДВЕ ПЕРСОНЫ, ЗАДАНИЕ 2')
+
+get_shop_list_by_dishes(2, ['Салат Греческий', 'Курица с картофелем'])
